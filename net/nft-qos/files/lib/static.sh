@@ -42,7 +42,7 @@ qosdef_flush_static() {
 
 # static limit rate init
 qosdef_init_static() {
-	local unit_dl unit_ul rate_dl rate_ul
+	local static_unit_dl static_unit_ul static_rate_dl static_rate_ul
 	local limit_enable limit_type hook_ul="prerouting" hook_dl="postrouting"
 
 	uci_validate_section nft-qos default default \
@@ -67,7 +67,7 @@ qosdef_init_static() {
 	}
 
 	qosdef_appendx "table $NFT_QOS_INET_FAMILY nft-qos-static {\n"
-	qosdef_append_chain_sta $hook_ul upload upload $unit_ul $rate_ul
-	qosdef_append_chain_sta $hook_dl download download $unit_dl $rate_dl
+	qosdef_append_chain_sta $hook_ul upload upload $static_unit_ul $static_rate_ul
+	qosdef_append_chain_sta $hook_dl download download $static_unit_dl $static_rate_dl
 	qosdef_appendx "}\n"
 }
